@@ -1,0 +1,7 @@
+{
+  "name": "polTracking",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
