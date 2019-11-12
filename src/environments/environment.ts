@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyDwAQus14FfM4LKa__xrn5pkTXn_lWPlZg",
-    authDomain: "poltracking.firebaseapp.com",
-    databaseURL: "https://poltracking.firebaseio.com",
-    projectId: "poltracking",
-    storageBucket: "poltracking.appspot.com",
-    messagingSenderId: "296772507354"
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: ''
   }
 };
 
