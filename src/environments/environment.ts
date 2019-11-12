@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyDwAQus14FfM4LKa__xrn5pkTXn_lWPlZg",
+    authDomain: "poltracking.firebaseapp.com",
+    databaseURL: "https://poltracking.firebaseio.com",
+    projectId: "poltracking",
+    storageBucket: "poltracking.appspot.com",
+    messagingSenderId: "296772507354"
+  }
 };
 
 /*
