@@ -73,7 +73,7 @@ export class HomePage {
   // Initialize a blank Map
 
   loadMap() {
-    let latLng = new google.maps.latLng(36.938406, -1.359259);
+    let latLng = new google.maps.LatLng(36.938406, -1.359259);
 
     let mapOptions = {
       center: latLng,
@@ -82,5 +82,63 @@ export class HomePage {
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
   }
+
+  // USe Capacitor to track our geolocation
+
+  startTracking() {
+    this.isTracking = true;
+    this.watch = Geolocation.watchPosition({}, (position, err ) => {
+      if (position) {
+        this.addNewLocation(
+          position.coords.latitude,
+          position.coords.longitude,
+          position.timestamp
+        );
+      }
+    });
+  }
+   // Unsubscribe from the geolocation watch using the initial ID
+
+   stopTracking() {
+     Geolocation.clearWatch({ id: this.watch }).then(() => {
+       this.isTracking = false;
+     });
+   }
+
+   // Save a new Location to Firebase and center map
+
+   addNewLocation(lat, lng, timestamp) {
+     this.locationsCollection.add({
+       lat,
+       lng,
+       timestamp
+     });
+     let position = new google.maps.LatLng(lat, lng);
+     this.map.setCenter(position);
+     this.map.setZoom(5);
+   }
+
+   // Delete a location from Firebase 
+   deleteLocation(pos) {
+    this.locationsCollection.doc(pos.id).delete();
+   }
+
+   // Redraw all Markers on the map
+   updateMap(locations) {
+     // Remove all current Marker
+     this.markers.map(marker => marker.setMap(null));
+     this.markers = [];
+
+     for (let loc of locations) {
+       let latLng = new google.maps.LatLng(loc.lat, loc.lng);
+
+       let marker = new google.maps.Marker({
+         map: this.map,
+         animation: google.maps.Animation.DROP,
+         position: latLng
+       });
+       this.markers.push(marker);
+     }
+   }
 
 }
